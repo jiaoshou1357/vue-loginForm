@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<style type="text/css">
+ .scaleMove{
+   font-size:14px!important;
+   transform: translateY(-30px);
+   transition:all 0.5s;
+ }
+ .scaleMove_leave{
+   font-size:18px!important;
+   transform: translateY(0px);
+   transition:all 0.5s;
+ }
+ .isShadow{
+  box-shadow:1px 7px 16px -10px #000;
+ }
+ .box_shadow{
+  box-shadow:3px 3px 20px 3px pink;
+ }
+</style>
+
+ 
+</head>
+<body>
+<div id="content" >
+ <div class="banner"><img src="images/banner.png"></div>
+ <div class="mes_content">
+  <div class="tittle"><p>與你分享女人「心」事。此外，瑜珈導師Jamie 亦會與你一起練習養心瑜伽！希望透過是次活動， 讓你學會關心自己的身體，多愛惜和保護心臟，歡迎你跟閨蜜齊齊參加！ </p></div>
+  <div class="detailes">
+    <h3>《齊齊談女人「心」事 x 養心瑜伽班》活動詳情</h3>
+    <table cellpadding="0" cellspacing="0">
+      <tr>
+       <td>日期  </td>
+       <td>2017年9月16日 (星期六)</td>
+      </tr>
+      <tr>
+        <td>時間</td>
+        <td>下午2時至4時</td>
+      </tr>
+       <tr>
+        <td>地點</td>
+        <td>零碳天地</td>
+      </tr>
+       <tr>
+        <td>名額</td>
+        <td>60個 (名額有限，先到先得）</td>
+      </tr>
+       <tr>
+        <td>服飾</td>
+        <td>藍色為主運動裝</td>
+      </tr>
+      <tr>
+        <td>費用</td>
+        <td>全免</td>
+      </tr>
+    </table>
+  </div>
+ </div>
+</div>
+<div class="forms app">
+  <div class="forms_con">
+      <h3 style="text-align: center;">立即填妥以下資料，即有</h3>
+      <div class="form">
+        <div class="item">
+          <label class="la" >姓名</label>
+          <input type="text" v-model="userName" class="style_same">
+          <div class="error">{{errUserName}}</div>
+        </div>
+        <div class="item">
+          <label class="la" >手機號碼</label>
+          <input type="text" v-model="phoneNumber" class="style_same">
+          <div class="error">{{errPhoneNumber}}</div>
+        </div>
+         <div class="item">
+          <label class="la" >電郵地址</label>
+          <input type="text" v-model="email" class="style_same">
+          <div class="error">{{errEmail}}</div>
+        </div>
+         <div class="item age">
+          <label class="la" >年齡</label>
+          <select class="style_same" v-model="select_age" :class="{box_shadow:isShowSelectShadow}">
+            <option></option>
+            <option>22</option>
+            <option>22</option>
+          </select>
+          <div class="error">{{errUserName}}</div>
+        </div>
+         <div class="item">
+           <label class="checkbox_style">您是否會和朋友一起</label>
+           <label class="checkbox_style"><input type="radio" value="go" v-model="goG">&nbsp;會</label>
+           <label class="checkbox_style"><input type="radio" value="noGo" v-model="goG">&nbsp;不會</label>
+        </div>
+        <div class="item">
+          <label class="la" >朋友姓名</label>
+          <input type="text" v-model="f_userName" class="style_same">
+          <div class="error">{{f_errUserName}}</div>
+        </div>
+        <div class="item">
+          <label class="la" >朋友手機號碼</label>
+          <input type="text" v-model="f_phoneNumber" class="style_same">
+          <div class="error">{{f_errPhoneNumber}}</div>
+        </div>
+         <div class="item">
+          <label class="la" >朋友電郵地址</label>
+          <input type="text" v-model="f_email" class="style_same">
+          <div class="error">{{f_errEmail}}</div>
+        </div>
+        <div class="item">
+         
+          <input type="checkbox" v-model="agree_one" value="agree" class="checkbox" >
+             &nbsp; &nbsp;本人赢了统一啦
+          <div class="error">{{errAgree_one}}</div>
+        </div>  
+      </div>
+     </div>
+  <div class="btn">
+    <button @click="submit()">提交</button>
+  </div>
+</div>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript">
+ new Vue({
+    el:".app",
+    data:{
+      userName:'',
+      errUserName:'',
+      phoneNumber:'',
+      errPhoneNumber:'',
+      email:'',
+      errEmail:'',
+      f_userName:'',
+      f_errUserName:'',
+      f_phoneNumber:'',
+      f_errPhoneNumber:'',
+      f_email:'',
+      f_errEmail:'',
+      goG:"go",
+      agree_one:false,
+      errAgree_one:'',
+      select_age:"",
+      isShowSelectShadow:false,
+      hasSubmit:false
+
+    },
+    methods:{
+    
+     checkUser(val){
+       if(val!==""){
+         return  ''
+       }else{
+        return  '請輸入用戶名'
+       }
+     },
+     checkPhone(val){
+       let phone=/^[0-9]{8,}$/
+       if(phone.test(val)){
+         return ''
+       }else{
+        return '請輸入正確的電話號碼'
+       }
+     },
+      checkEmail(val){
+        let email=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
+        if(email.test(val)){
+          return ''
+        }else{
+          return "請輸入正確的電郵地址"
+        }
+      },
+      checkAgree(val){
+        if(val==false){
+          return '请阁下点击以示同意'
+        }else{
+          return ''
+        }
+      },
+      checkSelect(val){
+          if(val==''){
+            this.isShowSelectShadow=true
+          }else{
+           this.isShowSelectShadow=false
+          }
+      },
+      submit(){
+        var _this=this
+        let allErr=this.errUserName
+                 +this.errPhoneNumber
+                 +this.errEmail
+                 +this.f_errUserName
+                 +this.f_errPhoneNumber
+                 +this.f_errEmail
+                 +this.errAgree_one
+        if(allErr==''&&this.userName!=""&&this.phoneNumber!=""&&this.email!=""&&this.f_userName!=""&&this.f_phoneNumber!=""&&this.f_email!=""&&this.agree_one!=""){
+            let datas={
+              userName:this.userName,
+              phoneNumber:this.phoneNumber,
+              email:this.email,
+              f_userName:this.f_userName,
+              f_phoneNumber:this.phoneNumber,
+              f_email:this.f_email,
+              agree_one:this.agree_one
+            }
+            if(!this.hasSubmit){
+              $.post('http://vue1.com/data.php',{datas:datas},function(res){
+               alert("提交成功")
+               _this.hasSubmit=true
+              })
+            }else{
+               alert("不能重复提交")
+            }
+        }else{
+           this.errUserName=this.checkUser(this.userName)
+           this.errPhoneNumber=this.checkPhone(this.phoneNumber)
+           this.errEmail=this.checkEmail(this.email)
+           this.f_errUserName=this.checkUser(this.f_userName)
+            this.f_errPhoneNumber=this.checkPhone(this.f_phoneNumber)
+            this.f_errEmail=this.checkEmail(this.f_email)
+            this.errAgree_one=this.checkAgree(this.agree_one)
+        }
+      }
+    },
+    
+    watch:{
+      userName:function(val){
+        this.errUserName=this.checkUser(val)
+      },
+      phoneNumber:function(val){
+        this.errPhoneNumber=this.checkPhone(val)
+      },
+      email:function(val){
+        this.errEmail=this.checkEmail(val)
+      },
+      f_userName:function(val){
+        this.f_errUserName=this.checkUser(val)
+      },
+      f_phoneNumber:function(val){
+        this.f_errPhoneNumber=this.checkPhone(val)
+      },
+      f_email:function(val){
+        this.f_errEmail=this.checkEmail(val)
+      },
+      agree_one:function(val){
+        this.errAgree_one=this.checkAgree(val)
+      },
+      select_age(val){
+        this.checkSelect(val)
+      }
+    },
+    directives:{
+      focus:{
+        componentUpdated(el,binding){
+          if(binding.value==true){
+            el.focus()
+          }
+        }
+      }
+    }
+ })
+
+ $(function(){
+       var flag=true
+       var nowFlag=false
+       $(".la").click(function(){
+             if(!$(this).hasClass('scaleMove')){
+
+              $(this).addClass("scaleMove")
+              $(this).removeClass('scaleMove_leave')
+              $(this).parent().find('input').addClass('isShadow')
+              $(this).parent().find('input').focus()
+             }else{
+               if($(this).parent().find('input').val()==''){
+                 $(this).parent().find('input').removeClass('isShadow')
+                  $(this).addClass('scaleMove_leave')
+                  $(this).removeClass('scaleMove')
+               }
+              
+             }
+       })
+})
+</script>
+</body>
+</html>
